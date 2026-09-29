@@ -8,6 +8,7 @@ public class AsteroidWaypoint : MonoBehaviour
     public Asteroid asteroid;
     public Vector2 spriteHalfExtents = new(32, 48); // Temporary constants, add some scaling later
     public Image WaypointImage { get; private set; }
+    private float minWaypointDist;
 
     void Awake()
     {
@@ -23,14 +24,20 @@ public class AsteroidWaypoint : MonoBehaviour
 
     void Update()
     {
-        Vector2 newPos = WaypointManager.Camera.WorldToScreenPoint(asteroid.transform.position);
+        Vector3 newPos = WaypointManager.Camera.WorldToScreenPoint(asteroid.transform.position);
 
         WaypointImage.enabled = newPos.x > WaypointManager.Camera.pixelWidth 
                                 || newPos.y > WaypointManager.Camera.pixelHeight
                                 || newPos.x < 0
-                                || newPos.y < 0;
+                                || newPos.y < 0
+                                || newPos.z < 0;
 
         if (!WaypointImage.enabled) return;
+
+        if (newPos.z < 0)
+        {
+            
+        }
         
         newPos.x = Mathf.Clamp(newPos.x, spriteHalfExtents.x, WaypointManager.Camera.pixelWidth - spriteHalfExtents.x);
         newPos.y = Mathf.Clamp(newPos.y, spriteHalfExtents.y, WaypointManager.Camera.pixelHeight - spriteHalfExtents.y);
