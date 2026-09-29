@@ -10,13 +10,20 @@ public class Asteroid : Damageable
     public Rigidbody rb { get; private set; }
     private Vector3 target;
 
-    void Awake()
+    override protected void Awake()
     {
+        base.Awake();
+        DeathEvent.AddListener(DeathCleanup);
         target = GameManager.Player.transform.position;
     }
 
     void FixedUpdate()
     {
         transform.position = Vector3.MoveTowards(transform.position, target, movementSpeed);
+    }
+
+    void DeathCleanup()
+    {
+        AsteroidManager.asteroids.Remove(this);
     }
 }

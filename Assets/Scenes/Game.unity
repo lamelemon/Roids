@@ -164,12 +164,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AsteroidSpawner
   spawnRate: 3
-  spawnAmount: 1
+  spawnCount: 1
   maxSpawnDistance: 25
   minSpawnDistance: 20
+  maxAsteroids: 10
   asteroidPrefabs:
   - {fileID: 6854136192809834321, guid: 8d4d8a8a01c8b1944ada91455cbd33e9, type: 3}
-  moveSpeed: 0
 --- !u!4 &81444396
 Transform:
   m_ObjectHideFlags: 0
@@ -315,10 +315,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 2512387469002778309, guid: 48cb3fb68c91eb94999fd99957eb0cae, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 0}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 48cb3fb68c91eb94999fd99957eb0cae, type: 3}
 --- !u!1 &702413256
 GameObject:
@@ -811,6 +808,7 @@ GameObject:
   - component: {fileID: 2099970466}
   - component: {fileID: 2099970472}
   - component: {fileID: 2099970471}
+  - component: {fileID: 2099970473}
   m_Layer: 5
   m_Name: UI
   m_TagString: Untagged
@@ -910,7 +908,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2099970465}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 30f0e07d95a4d497bbc3dbd22d792191, type: 3}
   m_Name: 
@@ -991,6 +989,19 @@ MonoBehaviour:
     m_InputActionReference: {fileID: -7530398834462728267, guid: c348712bda248c246b8c49b3db54643f, type: 3}
     m_ObjectReferenceObject: {fileID: 0}
     m_ManualValue: {x: 0, y: 0}
+--- !u!114 &2099970473
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2099970465}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 01bd4cee09d3d9c4faea788bcc976734, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AsteroidWaypoint
+  waypointSprite: {fileID: 21300000, guid: 11ef82b092bc6204e926f31357a769f7, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
