@@ -261,6 +261,7 @@ GameObject:
   - component: {fileID: 2512387470528047737}
   - component: {fileID: 2512387470528047718}
   - component: {fileID: 38668475924992881}
+  - component: {fileID: 2966104054462059436}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -360,6 +361,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e03d7976560a72d4291f64984101864a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Player
+  health: 3
+--- !u!135 &2966104054462059436
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2512387470528047719}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &2512387470890420964
 GameObject:
   m_ObjectHideFlags: 0

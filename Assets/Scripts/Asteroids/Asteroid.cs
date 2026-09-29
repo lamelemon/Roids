@@ -1,32 +1,22 @@
 using System;
-using System.Data.Common;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
 [Serializable]
-public class Asteroid : MonoBehaviour
+public class Asteroid : Damageable
 {
     public int spawnWeight = 1;
-    [SerializeField] private int health = 1;
-    public Rigidbody RigidBody { get; private set; }
-    private Player player;
+    [SerializeField] private float movementSpeed;
+    public Rigidbody rb { get; private set; }
+    private Vector3 target;
 
     void Awake()
     {
-        player = GameManager.Player;
+        target = GameManager.Player.transform.position;
     }
 
     void FixedUpdate()
     {
-        
-    }
-
-    public void TakeDamage(int damage)
-    {
-        health -= damage;
-        if (health <= 0)
-        {
-            Destroy(this);
-        }
+        transform.position = Vector3.MoveTowards(transform.position, target, movementSpeed);
     }
 }

@@ -155,3 +155,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Asteroid
   spawnWeight: 1
   health: 1
+  movementSpeed: 0.07
