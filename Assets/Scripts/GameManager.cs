@@ -10,12 +10,4 @@ public class GameManager : MonoBehaviour
         Instance = this;
         player = Instantiate(playerPrefab, transform);
     }
-
-#if UNITY_EDITOR
-    void OnDrawGizmosSelected()
-    {
-        Gizmos.color = Color.red;
-        Gizmos.DrawRay(transform.position, transform.rotation * Vector3.forward);
-    }
-#endif
 }

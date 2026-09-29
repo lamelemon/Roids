@@ -15,6 +15,13 @@ public class Asteroid : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+    }
+
+    void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("laser"))
+        {
+            Destroy(this);
+        }
     }
 }
