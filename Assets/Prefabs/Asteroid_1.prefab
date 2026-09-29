@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 3839022712555561881}
   - component: {fileID: -2047607448427473089}
   - component: {fileID: -6437233467942505491}
+  - component: {fileID: 6854136192809834321}
   m_Layer: 0
   m_Name: Asteroid_1
   m_TagString: asteroid
@@ -140,3 +141,17 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.010000001
   m_Center: {x: -0.0000000023283067, y: -0.0000000018626449, z: 0}
+--- !u!114 &6854136192809834321
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2942051580892192243}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c2d3013d2145b3340af6035ef7dca488, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Asteroid
+  spawnWeight: 1
+  health: 1

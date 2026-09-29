@@ -2,21 +2,23 @@ using UnityEngine;
 
 public class Laser : MonoBehaviour
 {
+    [SerializeField] private int damage = 1;
+
     Player player;
     Camera playerCamera;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        playerCamera = GameManager.Instance.player.GetComponentInChildren<Camera>();   
-        player = GameManager.Instance.player;
+        player = GameManager.Player;
+        playerCamera = player.GetComponentInChildren<Camera>();   
     }
 
     public void FireLaser()
     {
-        if (Physics.Raycast(player.transform.position, playerCamera.transform.forward, out RaycastHit hitInfo) && hitInfo.collider.gameObject.CompareTag("asteroid"))
+        if (Physics.Raycast(player.transform.position, playerCamera.transform.forward, out RaycastHit hitInfo) && hitInfo.collider.gameObject.TryGetComponent(out Asteroid asteroid))
         {
-            Destroy(hitInfo.collider.gameObject);
+            asteroid.TakeDamage(damage);
         }
     }
 }

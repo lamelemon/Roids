@@ -1,26 +1,30 @@
 using System;
+using System.Data.Common;
 using UnityEngine;
 
-[Obsolete]
+[RequireComponent(typeof(Rigidbody))]
 [Serializable]
 public class Asteroid : MonoBehaviour
 {
-    [SerializeField] private int spawnWeight = 1;
+    public int spawnWeight = 1;
     [SerializeField] private int health = 1;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public Rigidbody RigidBody { get; private set; }
+    private Player player;
+
+    void Awake()
+    {
+        player = GameManager.Player;
+    }
+
+    void FixedUpdate()
     {
         
     }
 
-    // Update is called once per frame
-    void Update()
+    public void TakeDamage(int damage)
     {
-    }
-
-    void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject.CompareTag("laser"))
+        health -= damage;
+        if (health <= 0)
         {
             Destroy(this);
         }
