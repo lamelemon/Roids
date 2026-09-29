@@ -17,9 +17,6 @@ public class Laser : MonoBehaviour
         if (Physics.Raycast(player.transform.position, playerCamera.transform.forward, out RaycastHit hitInfo) && hitInfo.collider.gameObject.CompareTag("asteroid"))
         {
             Destroy(hitInfo.collider.gameObject);
-        } else
-        {
-            Debug.Log("didnt hit nuffin");
         }
     }
 }
