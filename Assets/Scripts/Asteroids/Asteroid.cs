@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 
+[Obsolete]
 [Serializable]
 public class Asteroid : MonoBehaviour
 {
