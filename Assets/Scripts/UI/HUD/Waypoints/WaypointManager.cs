@@ -1,15 +1,11 @@
-using System;
 using System.Collections.Generic;
-using System.Data;
-using Unity.Collections;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class WaypointManager : MonoBehaviour
 {
     private Camera camera;
     [SerializeField] private AsteroidWaypoint waypointPrefab;
-    private readonly HashSet<AsteroidWaypoint> waypoints = new();
+    public static readonly HashSet<AsteroidWaypoint> waypoints = new();
 
     void Awake()
     {
@@ -22,10 +18,10 @@ public class WaypointManager : MonoBehaviour
         foreach (AsteroidWaypoint waypoint in waypoints)
         {            
             Vector2 newPos = camera.WorldToScreenPoint(waypoint.asteroid.transform.position);
-            newPos.x = Mathf.Clamp(newPos.x, 0, camera.pixelWidth);
-            newPos.y = Mathf.Clamp(newPos.y, 0, camera.pixelHeight);
+            newPos.x = Mathf.Clamp(newPos.x, waypoint.spriteHalfExtents.x, camera.pixelWidth - waypoint.spriteHalfExtents.x);
+            newPos.y = Mathf.Clamp(newPos.y, waypoint.spriteHalfExtents.y, camera.pixelHeight - waypoint.spriteHalfExtents.y);
 
-            waypoint.transform.position = camera.WorldToScreenPoint(newPos);
+            waypoint.transform.position = newPos;
         }
     }
 
