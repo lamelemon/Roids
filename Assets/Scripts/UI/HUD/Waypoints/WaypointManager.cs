@@ -3,31 +3,21 @@ using UnityEngine;
 
 public class WaypointManager : MonoBehaviour
 {
-    private Camera camera;
+    [Tooltip("Min to max scale of waypoints, determined by distance.")]
+    public Vector2 waypointScaling;
     [SerializeField] private AsteroidWaypoint waypointPrefab;
     public static readonly HashSet<AsteroidWaypoint> waypoints = new();
+    public static Camera Camera { get; private set; }
 
     void Awake()
     {
-        camera = GameManager.Instance.Player.GetComponentInChildren<Camera>();
+        Camera = GameManager.Instance.Player.GetComponentInChildren<Camera>();
         AsteroidManager.AsteroidSpawnEvent.AddListener(CreateWaypoint);
-    }
-
-    void Update()
-    {
-        foreach (AsteroidWaypoint waypoint in waypoints)
-        {            
-            Vector2 newPos = camera.WorldToScreenPoint(waypoint.asteroid.transform.position);
-            newPos.x = Mathf.Clamp(newPos.x, waypoint.spriteHalfExtents.x, camera.pixelWidth - waypoint.spriteHalfExtents.x);
-            newPos.y = Mathf.Clamp(newPos.y, waypoint.spriteHalfExtents.y, camera.pixelHeight - waypoint.spriteHalfExtents.y);
-
-            waypoint.transform.position = newPos;
-        }
     }
 
     void CreateWaypoint(Asteroid asteroid)
     {
-        AsteroidWaypoint waypoint = Instantiate(waypointPrefab, camera.WorldToScreenPoint(asteroid.transform.position), Quaternion.identity, parent:transform);
+        AsteroidWaypoint waypoint = Instantiate(waypointPrefab, Camera.WorldToScreenPoint(asteroid.transform.position), Quaternion.identity, parent:transform);
         waypoints.Add(waypoint);
         waypoint.asteroid = asteroid;
         asteroid.DeathEvent.AddListener(waypoint.Remove);

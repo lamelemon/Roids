@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(Rigidbody))]
+[RequireComponent(typeof(Collider))]
 [Serializable]
 public class Asteroid : Damageable
 {
@@ -10,7 +11,7 @@ public class Asteroid : Damageable
     [SerializeField] private float movementSpeed;
     public Rigidbody Rb { get; private set; }
     private Vector3 target;
-    public Image waypoint;
+    public Collider AsteroidCollider { get; private set; }
 
     override protected void Awake()
     {
@@ -27,7 +28,6 @@ public class Asteroid : Damageable
 
     void Death()
     {
-        Debug.Log(AsteroidManager.asteroids.Remove(this));
-        Destroy(gameObject);
+        AsteroidManager.asteroids.Remove(this);
     }
 }

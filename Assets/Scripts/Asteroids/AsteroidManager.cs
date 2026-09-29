@@ -8,8 +8,8 @@ public class AsteroidManager : MonoBehaviour
     public static HashSet<Asteroid> asteroids = new();
     [SerializeField] private float spawnRate = 3f; // how many seconds to wait between spawns
     [SerializeField] private int spawnCount = 1; // how many asteroids per spawn
-    [SerializeField] private float maxSpawnDistance = 10f;
-    [SerializeField] private float minSpawnDistance = 4f;
+    public float maxSpawnDistance = 10f;
+    public float minSpawnDistance = 4f;
     [SerializeField] private int maxAsteroids = 10;
 
     [SerializeField] private Asteroid[] asteroidPrefabs;

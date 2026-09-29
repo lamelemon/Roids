@@ -165,7 +165,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41432429a6447eb4998378b8f3735dac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AsteroidSpawner
-  spawnRate: 3
+  spawnRate: 10
   spawnCount: 1
   maxSpawnDistance: 25
   minSpawnDistance: 20
@@ -222,7 +222,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 80, y: 80}
+  m_SizeDelta: {x: 64, y: 64}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &404228004
 MonoBehaviour:
@@ -270,6 +270,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 38668475924992881, guid: 48cb3fb68c91eb94999fd99957eb0cae, type: 3}
+      propertyPath: invincible
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2512387470528047719, guid: 48cb3fb68c91eb94999fd99957eb0cae, type: 3}
       propertyPath: m_Name
       value: Player
@@ -337,7 +341,6 @@ GameObject:
   - component: {fileID: 702413259}
   - component: {fileID: 702413258}
   - component: {fileID: 702413257}
-  - component: {fileID: 702413260}
   m_Layer: 0
   m_Name: AR Session
   m_TagString: Untagged
@@ -387,18 +390,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &702413260
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 702413256}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 094cc086a7fec7a488445a25e4cb13df, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::DisableARSessionInEditor
 --- !u!1 &1323550131
 GameObject:
   m_ObjectHideFlags: 0
@@ -799,8 +790,6 @@ GameObject:
   - component: {fileID: 2099970468}
   - component: {fileID: 2099970467}
   - component: {fileID: 2099970466}
-  - component: {fileID: 2099970472}
-  - component: {fileID: 2099970471}
   - component: {fileID: 2099970473}
   m_Layer: 5
   m_Name: UI
@@ -894,94 +883,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
---- !u!114 &2099970471
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2099970465}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 30f0e07d95a4d497bbc3dbd22d792191, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_StepList:
-  - stepObject: {fileID: 0}
-    buttonText: 
-    includeSkipButton: 0
-  - stepObject: {fileID: 0}
-    buttonText: 
-    includeSkipButton: 0
-  - stepObject: {fileID: 0}
-    buttonText: 
-    includeSkipButton: 0
-  - stepObject: {fileID: 0}
-    buttonText: 
-    includeSkipButton: 0
-  - stepObject: {fileID: 0}
-    buttonText: 
-    includeSkipButton: 0
-  m_ObjectSpawner: {fileID: 0}
-  m_GreetingPrompt: {fileID: 0}
-  m_OptionsButton: {fileID: 0}
-  m_CreateButton: {fileID: 0}
-  m_MenuManager: {fileID: 2099970472}
---- !u!114 &2099970472
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2099970465}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f708c04c3dca17f4dbdc065df6a0c397, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_CreateButton: {fileID: 0}
-  m_DeleteButton: {fileID: 0}
-  m_ObjectMenu: {fileID: 0}
-  m_ModalMenu: {fileID: 0}
-  m_ObjectMenuAnimator: {fileID: 0}
-  m_ObjectSpawner: {fileID: 0}
-  m_CancelButton: {fileID: 0}
-  m_InteractionGroup: {fileID: 0}
-  m_DebugPlaneSlider: {fileID: 0}
-  m_PlaneManager: {fileID: 0}
-  m_UseARPlaneFading: 1
-  m_ARDebugMenu: {fileID: 0}
-  m_DebugMenuSlider: {fileID: 0}
-  m_TapStartPositionInput:
-    m_InputSourceMode: 2
-    m_InputAction:
-      m_Name: Tap Start Position
-      m_Type: 0
-      m_ExpectedControlType: Vector2
-      m_Id: 96463c3e-8d89-48b7-920b-5dd7ce2bab4a
-      m_Processors: 
-      m_Interactions: 
-      m_SingletonActionBindings: []
-      m_Flags: 0
-      m_Priority: 0
-    m_InputActionReference: {fileID: 2494954584338170553, guid: c348712bda248c246b8c49b3db54643f, type: 3}
-    m_ObjectReferenceObject: {fileID: 0}
-    m_ManualValue: {x: 0, y: 0}
-  m_DragCurrentPositionInput:
-    m_InputSourceMode: 2
-    m_InputAction:
-      m_Name: Drag Current Position
-      m_Type: 0
-      m_ExpectedControlType: Vector2
-      m_Id: 8e9c9dc9-6275-4dda-a74f-7a43ab26f31b
-      m_Processors: 
-      m_Interactions: 
-      m_SingletonActionBindings: []
-      m_Flags: 0
-      m_Priority: 0
-    m_InputActionReference: {fileID: -7530398834462728267, guid: c348712bda248c246b8c49b3db54643f, type: 3}
-    m_ObjectReferenceObject: {fileID: 0}
-    m_ManualValue: {x: 0, y: 0}
 --- !u!114 &2099970473
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -994,6 +895,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01bd4cee09d3d9c4faea788bcc976734, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WaypointManager
+  waypointScaling: {x: 0.75, y: 1.25}
   waypointPrefab: {fileID: 4554025961186809648, guid: 760f15c68fa799849a57af5223dfe3cc, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
