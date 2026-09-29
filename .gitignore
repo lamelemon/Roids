@@ -78,3 +78,5 @@ crashlytics-build.properties
 /[Aa]ssets/_[Rr]ecovery/
 
 /[Uu]IElementsSchema/
+/Roids_BackUpThisFolder_ButDontShipItWithYourGame
+/Roids_BurstDebugInformation_DoNotShip

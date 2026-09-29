@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: -2047607448427473089}
   - component: {fileID: -6437233467942505491}
   - component: {fileID: 6854136192809834321}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Asteroid_1
   m_TagString: asteroid
   m_Icon: {fileID: 0}
@@ -112,7 +112,7 @@ Rigidbody:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 8
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 0
@@ -153,6 +153,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c2d3013d2145b3340af6035ef7dca488, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Asteroid
-  spawnWeight: 1
   health: 1
+  spawnWeight: 1
   movementSpeed: 0.07
