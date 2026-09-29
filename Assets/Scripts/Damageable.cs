@@ -11,13 +11,12 @@ public class Damageable : MonoBehaviour
         DeathEvent = new();
     }
 
-    public bool TakeDamage(int damage)
+    virtual public bool TakeDamage(int damage)
     {
         health -= damage;
         if (health <= 0)
         {
             DeathEvent.Invoke();
-            Destroy(gameObject);
             return true;
         }
         return false;

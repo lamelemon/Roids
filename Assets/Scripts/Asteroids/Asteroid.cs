@@ -15,7 +15,7 @@ public class Asteroid : Damageable
     override protected void Awake()
     {
         base.Awake();
-        DeathEvent.AddListener(DeathCleanup);
+        DeathEvent.AddListener(Death);
         Rb = GetComponent<Rigidbody>();
         target = GameManager.Instance.Player.transform.position;
     }
@@ -25,8 +25,9 @@ public class Asteroid : Damageable
         transform.position = Vector3.MoveTowards(transform.position, target, movementSpeed);
     }
 
-    void DeathCleanup()
+    void Death()
     {
-        AsteroidManager.asteroids.Remove(this);
+        Debug.Log(AsteroidManager.asteroids.Remove(this));
+        Destroy(gameObject);
     }
 }
