@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.UI;
 
 [RequireComponent(typeof(Rigidbody))]
 [Serializable]
@@ -7,14 +8,16 @@ public class Asteroid : Damageable
 {
     public int spawnWeight = 1;
     [SerializeField] private float movementSpeed;
-    public Rigidbody rb { get; private set; }
+    public Rigidbody Rb { get; private set; }
     private Vector3 target;
+    public Image waypoint;
 
     override protected void Awake()
     {
         base.Awake();
         DeathEvent.AddListener(DeathCleanup);
-        target = GameManager.Player.transform.position;
+        Rb = GetComponent<Rigidbody>();
+        target = GameManager.Instance.Player.transform.position;
     }
 
     void FixedUpdate()

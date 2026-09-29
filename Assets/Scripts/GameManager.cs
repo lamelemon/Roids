@@ -1,21 +1,18 @@
-using Unity.VectorGraphics;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    public static Player Player { get; private set; }
     public static GameManager Instance { get; private set; }
     [SerializeField] private bool spawnPlayer = true;
+    public Player Player;
     [SerializeField] private Player playerPrefab;
+    [SerializeField] private Canvas UI;
     void Awake()
     {
         Instance = this;
-        if (spawnPlayer)
+        if (spawnPlayer && playerPrefab != null)
         {
             Player = Instantiate(playerPrefab, transform);
-        } else
-        {
-            Player = FindAnyObjectByType<Player>();
         }
     }
 }
