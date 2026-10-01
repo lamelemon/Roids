@@ -22,4 +22,12 @@ public class WaypointManager : MonoBehaviour
         waypoint.asteroid = asteroid;
         asteroid.DeathEvent.AddListener(waypoint.Remove);
     }
+
+    void Update()
+    {
+        foreach (AsteroidWaypoint waypoint in waypoints)
+        {
+            waypoint.UpdatePos();
+        }
+    }
 }

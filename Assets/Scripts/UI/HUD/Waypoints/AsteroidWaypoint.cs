@@ -1,4 +1,3 @@
-using Unity.Mathematics.Geometry;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,12 +7,13 @@ public class AsteroidWaypoint : MonoBehaviour
     public Asteroid asteroid;
     public Vector2 spriteHalfExtents = new(32, 48); // Temporary constants, add some scaling later
     public Image WaypointImage { get; private set; }
-    private float minWaypointDist;
+    private Camera camera;
 
     void Awake()
     {
-        GameManager.Instance.Player.GetComponentInChildren<Camera>();
+        camera = GameManager.Instance.Player.GetComponentInChildren<Camera>();
         WaypointImage = GetComponent<Image>();
+
         // spriteHalfExtents = GetComponent<RectTransform>();
     }
     public void Remove()
@@ -22,26 +22,35 @@ public class AsteroidWaypoint : MonoBehaviour
         Destroy(gameObject);
     }
 
-    void Update()
+    public void UpdatePos()
     {
-        Vector3 newPos = WaypointManager.Camera.WorldToScreenPoint(asteroid.transform.position);
+        Vector3 newPos = camera.WorldToScreenPoint(asteroid.transform.position);
 
-        WaypointImage.enabled = newPos.x > WaypointManager.Camera.pixelWidth 
-                                || newPos.y > WaypointManager.Camera.pixelHeight
+        WaypointImage.enabled = newPos.x > camera.pixelWidth 
+                                || newPos.y > camera.pixelHeight
                                 || newPos.x < 0
                                 || newPos.y < 0
                                 || newPos.z < 0;
 
         if (!WaypointImage.enabled) return;
 
-        if (newPos.z < 0)
-        {
-            
-        }
+        Vector2 screenCenter = camera.pixelRect.center;
+
+        // Invert x and force y to point down
+        Vector2 screenDirection = new(
+            newPos.x - screenCenter.x,
+            -Mathf.Abs(newPos.y - screenCenter.y)
+        );
+
+        if (screenDirection.sqrMagnitude < 1E-3) screenDirection = Vector2.down; // Asteroid is behind screen center
+        else screenDirection.Normalize();
+
+        // Asteroid is behind camera
+        if (newPos.z < 0) newPos = (screenDirection + screenCenter) * (camera.pixelWidth + camera.pixelHeight);
         
-        newPos.x = Mathf.Clamp(newPos.x, spriteHalfExtents.x, WaypointManager.Camera.pixelWidth - spriteHalfExtents.x);
-        newPos.y = Mathf.Clamp(newPos.y, spriteHalfExtents.y, WaypointManager.Camera.pixelHeight - spriteHalfExtents.y);
+        newPos.x = Mathf.Clamp(newPos.x, spriteHalfExtents.x, camera.pixelWidth - spriteHalfExtents.x);
+        newPos.y = Mathf.Clamp(newPos.y, spriteHalfExtents.y, camera.pixelHeight - spriteHalfExtents.y);
         
-        transform.SetPositionAndRotation(newPos, Quaternion.FromToRotation(Vector3.zero, newPos));
+        transform.SetPositionAndRotation(newPos, Quaternion.Euler(screenDirection));
     }
 }
