@@ -22,6 +22,7 @@ public class AsteroidWaypoint : MonoBehaviour
         Destroy(gameObject);
     }
 
+    // Update waypoint position and rotation on screen, called by the waypoint manager in its Update()
     public void UpdatePos()
     {
         Vector3 newPos = camera.WorldToScreenPoint(asteroid.transform.position);
@@ -48,6 +49,7 @@ public class AsteroidWaypoint : MonoBehaviour
         // Asteroid is behind camera
         if (newPos.z < 0) newPos = (screenDirection + screenCenter) * (camera.pixelWidth + camera.pixelHeight);
         
+        // Clamp waypoint within screen bounds
         newPos.x = Mathf.Clamp(newPos.x, spriteHalfExtents.x, camera.pixelWidth - spriteHalfExtents.x);
         newPos.y = Mathf.Clamp(newPos.y, spriteHalfExtents.y, camera.pixelHeight - spriteHalfExtents.y);
         
