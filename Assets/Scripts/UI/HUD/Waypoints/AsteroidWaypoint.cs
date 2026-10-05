@@ -11,7 +11,7 @@ public class AsteroidWaypoint : MonoBehaviour
 
     void Awake()
     {
-        camera = GameManager.Instance.Player.GetComponentInChildren<Camera>();
+        camera = GameManager.camera;
         WaypointImage = GetComponent<Image>();
 
         // spriteHalfExtents = GetComponent<RectTransform>();
@@ -26,33 +26,34 @@ public class AsteroidWaypoint : MonoBehaviour
     public void UpdatePos()
     {
         Vector3 newPos = camera.WorldToScreenPoint(asteroid.transform.position);
+        bool behindCamera = newPos.z < 0;
 
         WaypointImage.enabled = newPos.x > camera.pixelWidth 
                                 || newPos.y > camera.pixelHeight
                                 || newPos.x < 0
                                 || newPos.y < 0
-                                || newPos.z < 0;
+                                || behindCamera;
 
         if (!WaypointImage.enabled) return;
 
-        Vector2 screenCenter = camera.pixelRect.center;
-
-        // Invert x and force y to point down
-        Vector2 screenDirection = new(
-            newPos.x - screenCenter.x,
-            -Mathf.Abs(newPos.y - screenCenter.y)
-        );
-
-        if (screenDirection.sqrMagnitude < 1E-3) screenDirection = Vector2.down; // Asteroid is behind screen center
-        else screenDirection.Normalize();
+        Vector2 screenDirection = -(Vector2)newPos - camera.pixelRect.center;
 
         // Asteroid is behind camera
-        if (newPos.z < 0) newPos = (screenDirection + screenCenter) * (camera.pixelWidth + camera.pixelHeight);
+        if (behindCamera)
+        {
+            if (screenDirection.sqrMagnitude < 1E-3) screenDirection = Vector2.down;
+            else screenDirection.Normalize();
+
+            // Set magnitude to a circle with a radius that goes from the center of the screen to the corners
+            // Then adjusts the position to be on the screen
+            // If the position goes offscreen it gets clamped later
+            newPos = (camera.pixelRect.size.magnitude / 2 * screenDirection) + (camera.pixelRect.size / 2);
+        }
         
         // Clamp waypoint within screen bounds
         newPos.x = Mathf.Clamp(newPos.x, spriteHalfExtents.x, camera.pixelWidth - spriteHalfExtents.x);
         newPos.y = Mathf.Clamp(newPos.y, spriteHalfExtents.y, camera.pixelHeight - spriteHalfExtents.y);
         
-        transform.SetPositionAndRotation(newPos, Quaternion.Euler(screenDirection));
+        transform.SetPositionAndRotation(newPos, Quaternion.identity);
     }
 }
