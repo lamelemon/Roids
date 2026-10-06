@@ -1,3 +1,4 @@
+using Unity.Android.Gradle.Manifest;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -5,7 +6,7 @@ using UnityEngine.UI;
 public class AsteroidWaypoint : MonoBehaviour
 {
     public Asteroid asteroid;
-    public Vector2 spriteHalfExtents = new(32, 48); // Temporary constants, add some scaling later
+    public Vector2 spriteHalfExtents;
     public Image WaypointImage { get; private set; }
     private Camera camera;
 
@@ -13,6 +14,7 @@ public class AsteroidWaypoint : MonoBehaviour
     {
         camera = GameManager.camera;
         WaypointImage = GetComponent<Image>();
+        spriteHalfExtents = WaypointImage.rectTransform.GetScreenRect().size / 2;
 
         // spriteHalfExtents = GetComponent<RectTransform>();
     }
@@ -27,18 +29,16 @@ public class AsteroidWaypoint : MonoBehaviour
     {
         Vector3 newPos = camera.WorldToScreenPoint(asteroid.transform.position);
         bool behindCamera = newPos.z < 0;
-
-        WaypointImage.enabled = newPos.x > camera.pixelWidth 
+        WaypointImage.enabled = behindCamera
+                                || newPos.x > camera.pixelWidth 
                                 || newPos.y > camera.pixelHeight
                                 || newPos.x < 0
-                                || newPos.y < 0
-                                || behindCamera;
-
+                                || newPos.y < 0;
+                                
         if (!WaypointImage.enabled) return;
 
         Vector2 screenDirection = -(Vector2)newPos - camera.pixelRect.center;
 
-        // Asteroid is behind camera
         if (behindCamera)
         {
             if (screenDirection.sqrMagnitude < 1E-3) screenDirection = Vector2.down;
@@ -50,10 +50,14 @@ public class AsteroidWaypoint : MonoBehaviour
             newPos = (camera.pixelRect.size.magnitude / 2 * screenDirection) + (camera.pixelRect.size / 2);
         }
         
+
         // Clamp waypoint within screen bounds
-        newPos.x = Mathf.Clamp(newPos.x, spriteHalfExtents.x, camera.pixelWidth - spriteHalfExtents.x);
-        newPos.y = Mathf.Clamp(newPos.y, spriteHalfExtents.y, camera.pixelHeight - spriteHalfExtents.y);
-        
-        transform.SetPositionAndRotation(newPos, Quaternion.identity);
+        newPos.Set(
+            Mathf.Clamp(newPos.x, spriteHalfExtents.x, camera.pixelWidth - spriteHalfExtents.x),
+            Mathf.Clamp(newPos.y, spriteHalfExtents.y, camera.pixelHeight - spriteHalfExtents.y),
+            0
+        );
+
+        transform.position = newPos;
     }
 }

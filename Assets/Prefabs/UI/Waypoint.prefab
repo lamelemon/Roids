@@ -89,3 +89,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AsteroidWaypoint
   asteroid: {fileID: 0}
+  spriteHalfExtents: {x: 32, y: 32}
