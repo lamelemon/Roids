@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 2512387469002778331}
   - component: {fileID: 2512387469002778328}
   - component: {fileID: 2512387469002778329}
-  - component: {fileID: 2512387469002778310}
   - component: {fileID: 2512387469002778311}
   - component: {fileID: 948949349618104111}
   - component: {fileID: 928244759371268465}
@@ -116,20 +115,6 @@ MonoBehaviour:
   m_LightEstimation: 0
   m_FacingDirection: 1
   m_RenderMode: 0
---- !u!114 &2512387469002778310
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2512387469002778309}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 816b289ef451e094f9ae174fb4cf8db0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_UseCustomMaterial: 0
-  m_CustomMaterial: {fileID: 2100000, guid: 2d056ac30ecc9e542b26e06133f23602, type: 2}
 --- !u!114 &2512387469002778311
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -372,6 +357,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Player
   health: 3
+  invincible: 0
+  DeathEvent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!135 &2966104054462059436
 SphereCollider:
   m_ObjectHideFlags: 0

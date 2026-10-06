@@ -13,9 +13,10 @@ public class Player : Damageable
     
     void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("asteroid"))
+        if (collision.gameObject.TryGetComponent(out Asteroid asteroid))
         {
             TakeDamage(1);
+            asteroid.TakeDamage(1);
         }
     }
 

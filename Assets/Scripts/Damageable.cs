@@ -20,13 +20,21 @@ public class Damageable : MonoBehaviour
         health -= damage;
         if (health <= 0)
         {
+            Die();
             Destroy(gameObject);
             return true;
         }
         return false;
     }
 
-    void OnDestroy()
+    [ContextMenu("Take one damage")]
+    virtual protected void TakeOneDamage()
+    {
+        TakeDamage(1);
+    }
+
+    [ContextMenu("Die")]
+    virtual public void Die()
     {
         DeathEvent.Invoke();
     }
