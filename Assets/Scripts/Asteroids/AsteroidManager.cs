@@ -17,6 +17,10 @@ public class AsteroidManager : MonoBehaviour
 
     public static UnityEvent<Asteroid> AsteroidSpawnEvent = new();
 
+    public int asteroidsSpawned { get; private set; } = 0;
+    public int asteroidsDestroyed { get; private set; } = 0;
+    private int nextAsteroidHealth = 1;
+
     private void FixedUpdate()
     {
         sinceLastSpawn += Time.fixedDeltaTime;
@@ -26,11 +30,21 @@ public class AsteroidManager : MonoBehaviour
             int asteroidsToSpawn = Math.Min(maxAsteroids - asteroids.Count, spawnCount);
             for (int i = 0; i < asteroidsToSpawn; i++)
             {
-                Vector3 spawnPos = UnityEngine.Random.onUnitSphere * UnityEngine.Random.Range(minSpawnDistance, maxSpawnDistance);
-                Asteroid asteroid = Instantiate(asteroidPrefabs[0], spawnPos, transform.rotation);
+                Asteroid asteroid = Instantiate(
+                    asteroidPrefabs[0], 
+                    UnityEngine.Random.onUnitSphere * UnityEngine.Random.Range(minSpawnDistance, maxSpawnDistance),
+                    transform.rotation
+                );
                 asteroids.Add(asteroid);
                 AsteroidSpawnEvent.Invoke(asteroid);
+                asteroid.DeathEvent.AddListener(OnAsteroidDestroyed);
+                asteroidsSpawned++;
             }
         }
+    }
+
+    private void OnAsteroidDestroyed()
+    {
+        asteroidsDestroyed++;
     }
 }
