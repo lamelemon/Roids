@@ -140,7 +140,7 @@ SphereCollider:
   m_Enabled: 1
   serializedVersion: 3
   m_Radius: 0.010000001
-  m_Center: {x: -0.0000000023283067, y: -0.0000000018626449, z: 0}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &6854136192809834321
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -154,7 +154,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Asteroid
   health: 1
+  m_maxHealth: 1
   invincible: 0
+  startMaxHealth: 1
   DeathEvent:
     m_PersistentCalls:
       m_Calls: []

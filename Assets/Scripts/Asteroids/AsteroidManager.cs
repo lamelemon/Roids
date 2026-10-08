@@ -1,25 +1,35 @@
 using System;
 using System.Collections.Generic;
+using UnityEditor.EditorTools;
 using UnityEngine;
 using UnityEngine.Events;
 
 public class AsteroidManager : MonoBehaviour
 {
     public static HashSet<Asteroid> asteroids = new();
-    [SerializeField] private float spawnRate = 3f; // how many seconds to wait between spawns
-    [SerializeField] private int spawnCount = 1; // how many asteroids per spawn
-    public float maxSpawnDistance = 10f;
-    public float minSpawnDistance = 4f;
+    [SerializeField]
+    [Tooltip("How many seconds to wait between spawns")]
+    [Range(1f, 100f)]
+    private float spawnRate = 3f;
+    [SerializeField] 
+    [Tooltip("How many asteroids to spawn per spawn cycle")]
+    private int spawnCount = 1;
+    [SerializeField]
+    [Tooltip("Farthest away an asteorid can spawn to the player")]
+    private float maxSpawnDistance = 10f;
+    [SerializeField]
+    [Tooltip("Closest an asteroid can spawn to the player")]
+    private float minSpawnDistance = 4f;
+    [Tooltip("How many asteroids can be present at once")]
     [SerializeField] private int maxAsteroids = 10;
-
     [SerializeField] private Asteroid[] asteroidPrefabs;
     private float sinceLastSpawn = 0;
 
     public static UnityEvent<Asteroid> AsteroidSpawnEvent = new();
 
-    public int asteroidsSpawned { get; private set; } = 0;
-    public int asteroidsDestroyed { get; private set; } = 0;
-    private int nextAsteroidHealth = 1;
+    public int AsteroidsSpawned { get; private set; } = 0;
+    public int AsteroidsDestroyed { get; private set; } = 0;
+    private int asteroidHealth = 1;
 
     private void FixedUpdate()
     {
@@ -38,13 +48,18 @@ public class AsteroidManager : MonoBehaviour
                 asteroids.Add(asteroid);
                 AsteroidSpawnEvent.Invoke(asteroid);
                 asteroid.DeathEvent.AddListener(OnAsteroidDestroyed);
-                asteroidsSpawned++;
+                AsteroidsSpawned++;
+                
+                if (AsteroidsSpawned % 10 == 0)
+                {
+                    asteroidHealth += Mathf.FloorToInt(AsteroidsSpawned * 0.1f);
+                } 
             }
         }
     }
 
     private void OnAsteroidDestroyed()
     {
-        asteroidsDestroyed++;
+        AsteroidsDestroyed++;
     }
 }
