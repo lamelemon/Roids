@@ -62,4 +62,20 @@ public class AsteroidManager : MonoBehaviour
     {
         AsteroidsDestroyed++;
     }
+
+    private void OnDisable()
+    {
+        foreach (Asteroid asteroid in asteroids)
+        {
+            asteroid.enabled = false;
+        }
+    }
+
+    private void OnEnable()
+    {
+        foreach (Asteroid asteroid in asteroids)
+        {
+            asteroid.enabled = true;
+        }
+    }
 }

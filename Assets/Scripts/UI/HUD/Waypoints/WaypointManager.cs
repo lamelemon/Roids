@@ -30,4 +30,20 @@ public class WaypointManager : MonoBehaviour
             waypoint.UpdatePos();
         }
     }
+
+    void OnDisable()
+    {
+        foreach (AsteroidWaypoint waypoint in waypoints)
+        {
+            waypoint.enabled = false;
+        }
+    }
+
+    void OnEnable()
+    {
+        foreach (AsteroidWaypoint waypoint in waypoints)
+        {
+            waypoint.enabled = true;
+        }
+    }
 }

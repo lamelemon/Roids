@@ -26,6 +26,12 @@ public class AsteroidWaypoint : MonoBehaviour
     // Update waypoint position and rotation on screen, called by the waypoint manager in its Update()
     public void UpdatePos()
     {
+        if (asteroid == null)
+        {
+            Remove();
+            return;
+        }
+
         Vector3 newPos = camera.WorldToScreenPoint(asteroid.transform.position);
         bool behindCamera = newPos.z < 0;
         WaypointImage.enabled = behindCamera
@@ -54,7 +60,7 @@ public class AsteroidWaypoint : MonoBehaviour
         newPos.Set(
             Mathf.Clamp(newPos.x, spriteHalfExtents.x, camera.pixelWidth - spriteHalfExtents.x),
             Mathf.Clamp(newPos.y, spriteHalfExtents.y, camera.pixelHeight - spriteHalfExtents.y),
-            0
+            1
         );
 
         transform.position = newPos;
