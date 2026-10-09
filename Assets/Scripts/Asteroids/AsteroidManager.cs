@@ -67,7 +67,8 @@ public class AsteroidManager : MonoBehaviour
     {
         foreach (Asteroid asteroid in asteroids)
         {
-            asteroid.enabled = false;
+            if (asteroid != null) asteroid.enabled = false;
+            else asteroids.Remove(asteroid);
         }
     }
 
@@ -75,7 +76,8 @@ public class AsteroidManager : MonoBehaviour
     {
         foreach (Asteroid asteroid in asteroids)
         {
-            asteroid.enabled = true;
+            if (asteroid != null) asteroid.enabled = true;
+            else asteroids.Remove(asteroid);
         }
     }
 }
