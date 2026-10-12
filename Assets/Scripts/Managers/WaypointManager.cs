@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WaypointManager : Manager
+public class WaypointManager : GroupManager
 {
     [Tooltip("Min to max scale of waypoints, determined by distance.")]
     public Vector2 waypointScaling;
@@ -9,10 +9,11 @@ public class WaypointManager : Manager
     public static new HashSet<AsteroidWaypoint> managed;
     public static Camera Camera { get; private set; }
 
-    void Awake()
+    override protected void Awake()
     {
         Camera = GameManager.Player.GetComponentInChildren<Camera>();
         AsteroidManager.AsteroidSpawnEvent.AddListener(CreateWaypoint);
+        managed = new();
     }
 
     void CreateWaypoint(Asteroid asteroid)

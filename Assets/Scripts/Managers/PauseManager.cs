@@ -14,7 +14,7 @@ public class PauseManager : Manager
     private static readonly List<MonoBehaviour> wasDisabledOnPause = new();
     public static PauseManager instance;
 
-    void Awake()
+    override protected void Awake()
     {
         instance = this;
     }

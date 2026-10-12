@@ -7,6 +7,7 @@ public class Player : Damageable
 {
     override protected void Awake()
     {
+        GameManager.Player = this;
         base.Awake();
         DeathEvent.AddListener(Death);
     }

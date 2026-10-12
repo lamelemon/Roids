@@ -8,7 +8,7 @@ public class GameManager : Manager
     [SerializeField] private Player playerPrefab;
     [SerializeField] private Canvas UI;
 
-    void Awake()
+    override protected void Awake()
     {
         if (spawnPlayer && playerPrefab != null)
         {

@@ -4,7 +4,7 @@ using UnityEditor.EditorTools;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class AsteroidManager : Manager
+public class AsteroidManager : GroupManager
 {
     [SerializeField]
     [Tooltip("How many seconds to wait between spawns")]
@@ -32,7 +32,7 @@ public class AsteroidManager : Manager
     public static new HashSet<Asteroid> managed;
 
 
-    void Awake()
+    override protected void Awake()
     {
         managed = new();
     }

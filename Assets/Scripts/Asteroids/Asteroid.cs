@@ -18,7 +18,13 @@ public class Asteroid : Damageable
         base.Awake();
         DeathEvent.AddListener(Death);
         Rb = GetComponent<Rigidbody>();
-        target = GameManager.Player.transform.position;
+        try
+        {
+            target = GameManager.Player.transform.position;
+        } catch
+        {
+            Debug.Log("Couldn't find player!");
+        }
     }
 
     void FixedUpdate()
