@@ -18,7 +18,7 @@ public class Asteroid : Damageable
         base.Awake();
         DeathEvent.AddListener(Death);
         Rb = GetComponent<Rigidbody>();
-        target = GameManager.Instance.Player.transform.position;
+        target = GameManager.Player.transform.position;
     }
 
     void FixedUpdate()
@@ -28,6 +28,6 @@ public class Asteroid : Damageable
 
     void Death()
     {
-        AsteroidManager.asteroids.Remove(this);
+        AsteroidManager.managed.Remove(this);
     }
 }

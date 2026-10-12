@@ -10,7 +10,7 @@ public class Laser : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        player = GameManager.Instance.Player;
+        player = GameManager.Player;
         playerCamera = player.GetComponentInChildren<Camera>();   
     }
 

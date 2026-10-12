@@ -4,9 +4,8 @@ using UnityEditor.EditorTools;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class AsteroidManager : MonoBehaviour
+public class AsteroidManager : Manager
 {
-    public static HashSet<Asteroid> asteroids = new();
     [SerializeField]
     [Tooltip("How many seconds to wait between spawns")]
     [Range(1f, 100f)]
@@ -30,14 +29,21 @@ public class AsteroidManager : MonoBehaviour
     public int AsteroidsSpawned { get; private set; } = 0;
     public int AsteroidsDestroyed { get; private set; } = 0;
     private int asteroidHealth = 1;
+    public static new HashSet<Asteroid> managed;
+
+
+    void Awake()
+    {
+        managed = new();
+    }
 
     private void FixedUpdate()
     {
         sinceLastSpawn += Time.fixedDeltaTime;
-        if (sinceLastSpawn >= spawnRate && asteroids.Count < maxAsteroids)
+        if (sinceLastSpawn >= spawnRate && managed.Count < maxAsteroids)
         {
             sinceLastSpawn -= spawnRate;
-            int asteroidsToSpawn = Math.Min(maxAsteroids - asteroids.Count, spawnCount);
+            int asteroidsToSpawn = Math.Min(maxAsteroids - managed.Count, spawnCount);
             for (int i = 0; i < asteroidsToSpawn; i++)
             {
                 Asteroid asteroid = Instantiate(
@@ -45,7 +51,7 @@ public class AsteroidManager : MonoBehaviour
                     UnityEngine.Random.onUnitSphere * UnityEngine.Random.Range(minSpawnDistance, maxSpawnDistance),
                     transform.rotation
                 );
-                asteroids.Add(asteroid);
+                managed.Add(asteroid);
                 AsteroidSpawnEvent.Invoke(asteroid);
                 asteroid.DeathEvent.AddListener(OnAsteroidDestroyed);
                 AsteroidsSpawned++;
@@ -61,23 +67,5 @@ public class AsteroidManager : MonoBehaviour
     private void OnAsteroidDestroyed()
     {
         AsteroidsDestroyed++;
-    }
-
-    private void OnDisable()
-    {
-        foreach (Asteroid asteroid in asteroids)
-        {
-            if (asteroid != null) asteroid.enabled = false;
-            else asteroids.Remove(asteroid);
-        }
-    }
-
-    private void OnEnable()
-    {
-        foreach (Asteroid asteroid in asteroids)
-        {
-            if (asteroid != null) asteroid.enabled = true;
-            else asteroids.Remove(asteroid);
-        }
     }
 }

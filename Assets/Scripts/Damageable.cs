@@ -16,7 +16,7 @@ public class Damageable : MonoBehaviour
         }
     }
 
-    [SerializeField] protected int health = 1;
+    [SerializeField] protected float health = 1;
     [SerializeField] private int m_maxHealth = 1;
     [SerializeField] protected bool invincible = false;
     [SerializeField] protected bool startMaxHealth = true;

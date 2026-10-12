@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class PauseManager : MonoBehaviour
+public class PauseManager : Manager
 {
     public static UnityEvent OnPause { get; private set; } = new();
     public static UnityEvent OnUnPause { get; private set; } = new();
@@ -10,9 +10,9 @@ public class PauseManager : MonoBehaviour
 
     public static bool IsPaused { get; private set; } = false;
 
-    public static PauseManager instance;
     public MonoBehaviour[] disableOnPause;
     private static readonly List<MonoBehaviour> wasDisabledOnPause = new();
+    public static PauseManager instance;
 
     void Awake()
     {

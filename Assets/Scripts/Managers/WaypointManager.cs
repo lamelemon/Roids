@@ -1,49 +1,33 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WaypointManager : MonoBehaviour
+public class WaypointManager : Manager
 {
     [Tooltip("Min to max scale of waypoints, determined by distance.")]
     public Vector2 waypointScaling;
     [SerializeField] private AsteroidWaypoint waypointPrefab;
-    public static readonly HashSet<AsteroidWaypoint> waypoints = new();
+    public static new HashSet<AsteroidWaypoint> managed;
     public static Camera Camera { get; private set; }
 
     void Awake()
     {
-        Camera = GameManager.Instance.Player.GetComponentInChildren<Camera>();
+        Camera = GameManager.Player.GetComponentInChildren<Camera>();
         AsteroidManager.AsteroidSpawnEvent.AddListener(CreateWaypoint);
     }
 
     void CreateWaypoint(Asteroid asteroid)
     {
         AsteroidWaypoint waypoint = Instantiate(waypointPrefab, Camera.WorldToScreenPoint(asteroid.transform.position), Quaternion.identity, parent:transform);
-        waypoints.Add(waypoint);
+        managed.Add(waypoint);
         waypoint.asteroid = asteroid;
         asteroid.DeathEvent.AddListener(waypoint.Remove);
     }
 
     void Update()
     {
-        foreach (AsteroidWaypoint waypoint in waypoints)
+        foreach (AsteroidWaypoint waypoint in managed)
         {
             waypoint.UpdatePos();
-        }
-    }
-
-    void OnDisable()
-    {
-        foreach (AsteroidWaypoint waypoint in waypoints)
-        {
-            waypoint.enabled = false;
-        }
-    }
-
-    void OnEnable()
-    {
-        foreach (AsteroidWaypoint waypoint in waypoints)
-        {
-            waypoint.enabled = true;
         }
     }
 }

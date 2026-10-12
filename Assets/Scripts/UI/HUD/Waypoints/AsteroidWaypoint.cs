@@ -11,15 +11,13 @@ public class AsteroidWaypoint : MonoBehaviour
 
     void Awake()
     {
-        camera = GameManager.camera;
+        camera = GameManager.Player.GetComponentInChildren<Camera>();
         WaypointImage = GetComponent<Image>();
         spriteHalfExtents = WaypointImage.rectTransform.GetScreenRect().size / 2;
-
-        // spriteHalfExtents = GetComponent<RectTransform>();
     }
     public void Remove()
     {
-        WaypointManager.waypoints.Remove(this);
+        WaypointManager.managed.Remove(this);
         Destroy(gameObject);
     }
 
