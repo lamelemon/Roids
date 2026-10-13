@@ -1,21 +1,29 @@
+using System;
+using System.Collections;
 using UnityEngine;
 
 public class Laser : MonoBehaviour
 {
-    [SerializeField] private int damage = 1;
-
-    Player player;
-    Camera camera;
-
-    void Start()
+    [SerializeField] private float travelSpeed;
+    public float TimeAlive { get; private set; }
+    public float LifeTime
     {
-        player = GameManager.Player;
-        camera = player.GetComponentInChildren<Camera>();   
+        get
+        {
+            return PauseManager.scaledTimeSinceApplicationStart - TimeAlive;
+        }
+    }
+    public float damage;
+    public Quaternion moveDirection;
+
+    void Awake()
+    {
+        TimeAlive = PauseManager.scaledTimeSinceApplicationStart;
     }
 
-    public void FireLaser()
+    void OnCollisionEnter(Collision collision)
     {
-        if (Physics.Raycast(player.transform.position, camera.transform.forward, out RaycastHit hitInfo) && hitInfo.collider.gameObject.TryGetComponent(out Asteroid asteroid))
+        if (collision.gameObject.TryGetComponent(out Asteroid asteroid))
         {
             asteroid.TakeDamage(damage);
         }

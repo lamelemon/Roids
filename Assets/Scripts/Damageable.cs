@@ -41,17 +41,17 @@ public class Damageable : MonoBehaviour
         return false;
     }
 
-    virtual public bool TakeDamage(int damage)
+    virtual public void TakeDamage(int damage) => TakeDamage((float)damage);
+
+    virtual public void TakeDamage(float damage)
     {
-        if (invincible) return false; 
+        if (invincible) return; 
 
         health -= damage;
-        if (health <= 0)
+        if (health <= 1E-02)
         {
             Die();
-            return true;
         }
-        return false;
     }
 
     [ContextMenu("Take one damage")]

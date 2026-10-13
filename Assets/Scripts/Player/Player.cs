@@ -3,8 +3,10 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 [Serializable]
+[RequireComponent(typeof(Collider))]
 public class Player : Damageable
 {
+    private Collider collider;
     override protected void Awake()
     {
         GameManager.Player = this;
@@ -25,4 +27,12 @@ public class Player : Damageable
     {
         SceneManager.LoadScene("MainMenu");
     }
+
+#if UNITY_EDITOR
+    void OnDrawGizmos()
+    {
+        Gizmos.color = Color.blue;
+        Gizmos.DrawSphere(transform.position, 0.5f);
+    }
+#endif
 }

@@ -14,9 +14,17 @@ public class PauseManager : Manager
     private static readonly List<MonoBehaviour> wasDisabledOnPause = new();
     public static PauseManager instance;
 
+    public static float scaledTimeSinceApplicationStart = 0;
+
     override protected void Awake()
     {
         instance = this;
+    }
+
+    void Update()
+    {
+        scaledTimeSinceApplicationStart += Time.deltaTime;
+        Debug.Log(scaledTimeSinceApplicationStart);
     }
 
     public static void Pause()
