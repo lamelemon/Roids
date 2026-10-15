@@ -4,7 +4,7 @@ using UnityEngine;
 public class LaserShooter : MonoBehaviour
 {
     [SerializeField] private Laser laserPrefab;
-    [SerializeField] private float m_laserLifeTime = 5.0f;
+    [SerializeField] private float maxLaserLifeTime = 5.0f;
 
     [SerializeField] private int damage = 1;
     [Tooltip("How many lasers to shoot. Decimals are considered % chances to fire an extra laser.")]
@@ -15,6 +15,7 @@ public class LaserShooter : MonoBehaviour
     [Tooltip("Time to wait before another laser can be fired.")]
     [Min(0)]
     [SerializeField] private float cooldown = 0.3f;
+    [SerializeField] private float laserTravelSpeed = 100f;
 
     private Queue<Laser> lasers;
 
@@ -34,18 +35,10 @@ public class LaserShooter : MonoBehaviour
 
     void Update()
     {
-        if (lasers.TryPeek(out Laser firstLaser) && PauseManager.scaledTimeSinceApplicationStart - firstLaser.TimeAlive >= m_laserLifeTime)
+        while (lasers.TryPeek(out Laser laser) && laser.LifeTime >= maxLaserLifeTime)
         {
-            // Create an array to iterate over so we can modify the queue while iterating
-            Laser[] iterable = lasers.ToArray();
-            foreach(Laser laser in iterable)
-            {
-                if (laser.TimeAlive >= m_laserLifeTime)
-                {
-                    Destroy(laser.gameObject);
-                    lasers.Dequeue();
-                } else return;
-            }
+            Destroy(laser.gameObject);
+            lasers.Dequeue();
         }
     }
 

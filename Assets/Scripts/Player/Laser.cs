@@ -2,23 +2,24 @@ using System;
 using System.Collections;
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody))]
 public class Laser : MonoBehaviour
 {
-    [SerializeField] private float travelSpeed;
-    public float TimeAlive { get; private set; }
+    private float TimeAtCreation;
     public float LifeTime
     {
         get
         {
-            return PauseManager.scaledTimeSinceApplicationStart - TimeAlive;
+            return PauseManager.scaledTimeSinceApplicationStart - TimeAtCreation;
         }
     }
     public float damage;
-    public Quaternion moveDirection;
+    public Rigidbody Rb { get; private set; }
 
     void Awake()
     {
-        TimeAlive = PauseManager.scaledTimeSinceApplicationStart;
+        Rb = GetComponent<Rigidbody>();
+        TimeAtCreation = PauseManager.scaledTimeSinceApplicationStart;
     }
 
     void OnCollisionEnter(Collision collision)

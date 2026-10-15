@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.XR.Interaction.Toolkit;
 
 public class PauseManager : Manager
 {
@@ -8,23 +9,23 @@ public class PauseManager : Manager
     public static UnityEvent OnUnPause { get; private set; } = new();
     public static UnityEvent OnTogglePause { get; private set; } = new();
 
-    public static bool IsPaused { get; private set; } = false;
+    public static bool IsPaused = false;
 
     public MonoBehaviour[] disableOnPause;
-    private static readonly List<MonoBehaviour> wasDisabledOnPause = new();
-    public static PauseManager instance;
+    private static readonly Queue<MonoBehaviour> wasDisabledOnPause = new();
+    public static new PauseManager Instance;
 
     public static float scaledTimeSinceApplicationStart = 0;
 
     override protected void Awake()
     {
-        instance = this;
+        base.Awake();
+        Instance = this;
     }
 
     void Update()
     {
         scaledTimeSinceApplicationStart += Time.deltaTime;
-        Debug.Log(scaledTimeSinceApplicationStart);
     }
 
     public static void Pause()
@@ -34,12 +35,12 @@ public class PauseManager : Manager
         Time.timeScale = 0;
         IsPaused = true;
 
-        foreach (MonoBehaviour script in instance.disableOnPause)
+        foreach (MonoBehaviour script in Instance.disableOnPause)
         {
             if (script.enabled)
             {
+                wasDisabledOnPause.Enqueue(script);
                 script.enabled = false;
-                wasDisabledOnPause.Add(script);
             }
         }
     }
@@ -51,17 +52,23 @@ public class PauseManager : Manager
         Time.timeScale = 1;
         IsPaused = false;
 
-        foreach (MonoBehaviour script in wasDisabledOnPause)
+        while (wasDisabledOnPause.TryPeek(out MonoBehaviour script))
         {
             if (!script.enabled) script.enabled = true;
+            wasDisabledOnPause.Dequeue();
         }
-        wasDisabledOnPause.Clear();
     }
 
-    public static void TogglePause()
+    public static bool TogglePause()
     {
-        OnTogglePause.Invoke();
-        if (IsPaused) UnPause();
-        else Pause();
+        return TogglePause(!IsPaused);
+    }
+
+    public static bool TogglePause(bool pause)
+    {
+        if (pause) Pause();
+        else UnPause();
+        
+        return IsPaused;
     }
 }

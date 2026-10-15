@@ -12,9 +12,9 @@ GameObject:
   - component: {fileID: 3527156773140386945}
   - component: {fileID: 9170528862904367197}
   - component: {fileID: 7811302885111530183}
-  - component: {fileID: 6416721427552644616}
   - component: {fileID: 6930310735542497226}
-  m_Layer: 0
+  - component: {fileID: -4821330528700258815}
+  m_Layer: 6
   m_Name: Laser
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -31,8 +31,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: -0, z: 0}
-  m_LocalScale: {x: 0.005, y: 0.01, z: 0.005}
-  m_ConstrainProportionsScale: 1
+  m_LocalScale: {x: 0.005, y: 0.2, z: 0.005}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -116,23 +116,6 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &6416721427552644616
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 304062130323076471}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 172515602e62fb746b5d573b38a5fe58, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Unity.RenderPipelines.Core.Runtime::UnityEngine.Rendering.Volume
-  m_IsGlobal: 0
-  priority: 0
-  blendDistance: 1
-  weight: 1
-  sharedProfile: {fileID: 11400000, guid: 6999be68137c06f439019691c229f247, type: 2}
 --- !u!114 &6930310735542497226
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -145,3 +128,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80beff6122f43ce459c80cccb43a8194, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Laser
+  travelSpeed: 0
+  damage: 0
+  moveDirection: {x: 0, y: 0, z: 0, w: 0}
+--- !u!54 &-4821330528700258815
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 304062130323076471}
+  serializedVersion: 5
+  m_Mass: 0.0000001
+  m_LinearDamping: 0
+  m_AngularDamping: 0
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 8
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 1
+  m_Constraints: 0
+  m_CollisionDetection: 1

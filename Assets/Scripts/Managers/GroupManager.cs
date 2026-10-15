@@ -10,7 +10,7 @@ public class GroupManager : Manager
     /// </summary>
     public static HashSet<MonoBehaviour> managed;
 
-    virtual protected new void Awake()
+    override protected void Awake()
     {
         base.Awake();
         managed = new();

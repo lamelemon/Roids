@@ -5,10 +5,7 @@ using UnityEngine;
 // Base script for all the manager scripts in the project
 public class Manager : MonoBehaviour
 {
+    public static Manager Instance { get; protected set; }
 
-    virtual protected void Awake()
-    {
-    }
-
-    
+    virtual protected void Awake() {}
 }

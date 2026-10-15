@@ -30,5 +30,6 @@ public class WaypointManager : GroupManager
         {
             waypoint.UpdatePos();
         }
+        Debug.Log(managed.Count);
     }
 }

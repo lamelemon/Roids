@@ -7,9 +7,11 @@ public class GameManager : Manager
     public static Player Player;
     [SerializeField] private Player playerPrefab;
     [SerializeField] private Canvas UI;
+    public static new GameManager Instance;
 
     override protected void Awake()
     {
+        Instance = this;
         if (spawnPlayer && playerPrefab != null)
         {
             Player = Instantiate(playerPrefab, transform);

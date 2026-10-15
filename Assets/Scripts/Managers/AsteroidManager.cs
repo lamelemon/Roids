@@ -30,11 +30,13 @@ public class AsteroidManager : GroupManager
     public int AsteroidsDestroyed { get; private set; } = 0;
     private int asteroidHealth = 1;
     public static new HashSet<Asteroid> managed;
+    public static new AsteroidManager Instance;
 
 
     override protected void Awake()
     {
         managed = new();
+        Instance = this;
     }
 
     private void FixedUpdate()
