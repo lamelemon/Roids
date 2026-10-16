@@ -4,10 +4,15 @@ using UnityEngine.SceneManagement;
 public class PauseMenu : MonoBehaviour
 {
     private Canvas menu;
+    private SkillTree skillTree;
+
     void Awake()
     {
         menu = GetComponentInChildren<Canvas>(true);
         menu.enabled = false;
+
+        skillTree = GameManager.Instance.UI.GetComponentInChildren<SkillTree>(true);
+        skillTree.enabled = false;
 
         PauseManager.OnPause.AddListener(OnPause);
         PauseManager.OnUnPause.AddListener(OnUnPause);

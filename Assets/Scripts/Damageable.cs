@@ -17,6 +17,7 @@ public class Damageable : MonoBehaviour
     }
 
     [SerializeField] protected float health = 1;
+    public float armor = 0;
     [SerializeField] private int m_maxHealth = 1;
     [SerializeField] protected bool invincible = false;
     [SerializeField] protected bool startMaxHealth = true;
@@ -47,7 +48,7 @@ public class Damageable : MonoBehaviour
     {
         if (invincible) return; 
 
-        health -= damage;
+        health -= damage * (1 - armor / (armor + 100));
         if (health <= 1E-02)
         {
             Die();

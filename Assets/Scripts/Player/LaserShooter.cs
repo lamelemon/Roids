@@ -1,14 +1,18 @@
 using System.Collections.Generic;
+using System.Linq;
+using System.Reflection.Metadata.Ecma335;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class LaserShooter : MonoBehaviour
 {
+    public UnityEvent<float> LaserHit { get; private set; } = new();
+    public UnityEvent<float> LaserShot { get; private set; } = new();
     [SerializeField] private Laser laserPrefab;
-    [SerializeField] private float maxLaserLifeTime = 5.0f;
+    [SerializeField] private float maxLaserLifeTime = 1f;
 
-    [SerializeField] private int damage = 1;
     [Tooltip("How many lasers to shoot. Decimals are considered % chances to fire an extra laser.")]
-    [SerializeField] private float multiShot = 1f;
+    public float multiShot = 1f;
     [Tooltip("Accuracy of firing multiple lasers in degrees. First laser is always pinpoint accurate.")]
     [Range(0f, 180f)]
     [SerializeField] private float accuracy = 15f;
@@ -16,6 +20,34 @@ public class LaserShooter : MonoBehaviour
     [Min(0)]
     [SerializeField] private float cooldown = 0.3f;
     [SerializeField] private float laserTravelSpeed = 100f;
+
+    public float BaseDamage
+    {
+        get
+        {
+            return m_baseDamage;
+        }
+        set
+        {
+            m_baseDamage = value;
+            m_damage = value * m_damageMultiplier;
+        }
+    }
+    public float DamageMultiplier
+    {
+        get
+        {
+            return m_damageMultiplier;
+        }
+        set
+        {
+            m_damageMultiplier = value;
+            m_damage = BaseDamage * value;
+        }
+    }
+    [SerializeField] private float m_baseDamage = 1;
+    [SerializeField] private float m_damageMultiplier = 1;
+    [SerializeField] private float m_damage;
 
     private Queue<Laser> lasers;
 
@@ -46,19 +78,32 @@ public class LaserShooter : MonoBehaviour
     {
         Laser laser = Instantiate(laserPrefab, player.transform.position, camera.transform.rotation);
         lasers.Enqueue(laser);
-        laser.damage = damage;
+        laser.damage = m_damage;
+        laser.Rb.linearVelocity = camera.transform.forward * laserTravelSpeed;
+    }
+
+    public void FireRay()
+    {
+        if (
+            Physics.Raycast(Vector3.zero, camera.transform.forward, out RaycastHit hitInfo)
+            && hitInfo.collider.gameObject.TryGetComponent<Asteroid>(out Asteroid asteroid)
+            )
+        {
+            LaserHit.Invoke(m_damage);
+            asteroid.TakeDamage(m_damage);
+        }
     }
 
     public void NewFireLasers()
     {
-        FireLaser();
+        FireRay();
         if (multiShot > 1)
         {
             int lasersToFire = Mathf.FloorToInt(multiShot);
             lasersToFire += multiShot - lasersToFire < Random.value ? 1 : 0;
             for (int i = 0; i < lasersToFire; i++)
             {
-                FireLaser();
+                FireRay();
             }
         }
     }

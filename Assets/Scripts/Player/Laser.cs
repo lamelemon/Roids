@@ -27,6 +27,8 @@ public class Laser : MonoBehaviour
         if (collision.gameObject.TryGetComponent(out Asteroid asteroid))
         {
             asteroid.TakeDamage(damage);
+            this.enabled = false;
         }
+        Debug.Log("Collision with " + collision.gameObject.name);
     }
 }

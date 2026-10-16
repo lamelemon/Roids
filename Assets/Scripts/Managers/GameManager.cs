@@ -6,7 +6,8 @@ public class GameManager : Manager
     [SerializeField] private bool spawnPlayer = true;
     public static Player Player;
     [SerializeField] private Player playerPrefab;
-    [SerializeField] private Canvas UI;
+    public Canvas UI;
+    public SkillTree skillTree;
     public static new GameManager Instance;
 
     override protected void Awake()

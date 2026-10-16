@@ -257,7 +257,7 @@ GameObject:
   - component: {fileID: 2512387470528047718}
   - component: {fileID: 38668475924992881}
   - component: {fileID: 2966104054462059436}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -357,7 +357,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Player
   health: 3
+  m_maxHealth: 1
   invincible: 0
+  startMaxHealth: 1
   DeathEvent:
     m_PersistentCalls:
       m_Calls: []
